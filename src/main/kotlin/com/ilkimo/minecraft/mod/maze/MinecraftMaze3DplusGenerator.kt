@@ -1,6 +1,9 @@
 package com.ilkimo.minecraft.mod.maze
 
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
+import net.minecraft.commands.Commands
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 import org.slf4j.LoggerFactory
 
@@ -14,7 +17,16 @@ object MinecraftMaze3DplusGenerator : ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("Hello Fabric world!")
+		LOGGER.info("Maze3Dplus generator loaded on the server!")
+
+		CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
+			dispatcher.register(
+				Commands.literal("maze").executes { ctx ->
+					ctx.source.sendSuccess({ Component.literal("Maze3Dplus is alive!") }, false)
+					1
+				}
+			)
+		}
 	}
 
 	fun id(path: String): Identifier
